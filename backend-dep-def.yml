@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: backend-deploy
+  labels: 
+    name: backend-deploy
+    app: capitec-user-service
+spec:
+  template:
+    metadata: 
+        name: backend-pod
+        labels:
+          name: backend-pod
+          app: capitec-user-service
+    spec: 
+      containers:
+        - name: backend
+          image: thapeloseema/capitec-user-service:backend-amd64
+          ports:
+            - containerPort: 8080
+  replicas: 4
+  selector: 
+    matchLabels:
+      name: backend-pod
+      app: capitec-user-service
+  strategy:
+    type: RollingUpdate

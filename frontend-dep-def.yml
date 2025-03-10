@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: frontend-deploy
+  labels: 
+    name: frontend-deploy
+    app: capitec-user-service
+spec:
+  template:
+    metadata: 
+        name: frontend-pod
+        labels:
+          name: frontend-pod
+          app: capitec-user-service
+    spec:
+      containers:
+        - name: frontend
+          image: thapeloseema/capitec-user-service:frontend-amd64
+          ports:
+            - containerPort: 4200
+  replicas: 2
+  selector: 
+    matchLabels:
+      name: frontend-pod
+      app: capitec-user-service
+  strategy:
+    type: RollingUpdate
